@@ -1,0 +1,18 @@
+
+{% extends 'core/base.html' %}
+{% block title %}HOME{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="portada"></div>
+    <center>
+        <h1>Proyecto en Django Levantado</h1>
+    </center>
+    <br>
+    <h3>roles de usuarios</h3>
+    <ul>
+        {% for g in grupos %}
+        <li>{{ g.name}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+.navbar{
+        /*background-color: #01DFA5!important;*/
+        min-height: 80px;
+}
+
+.link{
+	text-decoration:none;
+}
+
+.portada {
+  background-image: url("../img/bodega.jpg");
+  background-color: #cccccc;
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}

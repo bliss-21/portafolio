@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% block title %}AGREGAR PRODUCTO{% endblock %}
+{% load static %}
+{% block content %}
+    <br><br>
+ 
+    <div class="container">
+        <div class="col-md-5 mx-auto " style="background-color: rgba(247, 247, 247, 0.99); border-radius: 15px 15px 15px 15px;">
+
+            <h1>Ingrese Producto</h1>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+        
+                <div class="form-group">
+                    <label for="">Nombre</label>
+                    <input 
+                        type="text" 
+                        class="form-control col" 
+                        name="nombre"  
+                        autofocus 
+                        autocapitalize="none" 
+                        autocomplete="nombre" 
+                        maxlength="150" 
+                        required 
+                        id="nombre" 
+                        placeholder="Ejemplo: Manzana Verde">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="">Fruta</label>
+                    <select name="cboFruta" id="cboFruta" class="form-control col">
+                        <option value="">Seleccionar</option>
+                        {% for f in fruta %}
+                        <option value="{{ f.id_fruta }}">{{ f.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Calidad</label>
+                    <select name="cboCalidad" id="cboCalidad" class="form-control col">
+                        <option value="">Seleccionar</option>
+                        {% for c in calidad %}
+                        <option value="{{ c.id_calidad }}">{{ c.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Fecha de Envio</label>
+                    <input type="date" name="fechaSubida" id="fechaSubida" class="form-control col">
+                </div> 
+
+                <div class="form-group">
+                    <label for="">Fecha de Vencimeinto</label>
+                    <input type="date" name="fechaVencimiento" id="fechaVencimiento" class="form-control col">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Cantidad de kilos</label>
+                    <input type="number" class="form-control col" id="cantidad" name="cantidad" min="100" max="500000">
+                </div>
+
+                <div class="row">
+                    <input type="submit"class="btn btn-success col-md-3" value="Agregar">
+                </div>
+        
+            </form>
+        </div>
+        {{ mensaje}}
+
+    </div>
+
+{% endblock %}

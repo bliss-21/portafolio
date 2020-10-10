@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+{% block title %}Formulario Afiliacion{% endblock %}
+{% load static %}
+{% block content %}
+
+    
+    <div class="container m-5 ">
+        <div class="col-md-6 mx-auto " style="background-color: rgba(247, 247, 247, 0.99); border-radius: 15px 15px 15px 15px;">
+        <h1>Formulario de Afiliacion</h1>
+        <br>
+        <form action="" method="POST">
+        {% csrf_token %}
+
+            <div class="form-group">
+                <label for="">Nombre Completo</label>
+                <input 
+                    type="text" 
+                    class="form-control col" 
+                    name="txtNombreCompleto"  
+                    autofocus 
+                    autocapitalize="none" 
+                    autocomplete="txtNombreCompleto" 
+                    maxlength="150" 
+                    required 
+                    id="txtNombreCompleto" 
+                    placeholder="Ingrese su nombre completo">
+            </div>
+
+            <div class="form-group">
+                <label for="">Afiliacion:</label>
+                <select name="cboAfiliacion" id="cboAfiliacion" class="form-control col" required >
+                    <option value="">Seleccionar</option>
+                    {% for a in afiliacion %}
+                    <option value="{{ a.0 }}">{{ a.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="">Nombre de su Empresa</label>
+                <input 
+                    type="text" 
+                    class="form-control col" 
+                    name="txtNombreEmpresa"
+                    autocomplete="txtNombreEmpresa" 
+                    maxlength="150" 
+                    id="txtNombreEmpresa" 
+                    placeholder="Ingrese el nombre de su Empresa">
+            </div>
+
+            <div class="form-group">
+                <label for="">Telefono</label>
+                <input type="number" class="form-control col" name="txtTelefono" id="txtTelefono">
+            </div>
+
+            <div class="form-group" required>
+                <label for="">Correo</label>
+                <input type="email" class="form-control col"  placeholder="name@example.com" required id="txtmail" name="txtmail">
+            </div>
+
+            <div class="form-group">
+                <label for="">Comentario</label>
+                <input type="text" class="form-control col" id="txtComentario" name="txtComentario">
+            </div>
+
+            <div class="row">
+                <input type="submit"class="btn btn-success col-md-3" value="Enviar">
+            </div>
+
+        </form>
+        </div>
+    </div>
+
+{% endblock %}

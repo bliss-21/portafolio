@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link href="{% static 'core/css/login.css' %}" rel="stylesheet">
+</head>
+<body class="fondo">
+
+    <div class="container" >
+        <div class="row ">
+            <div class="col-md-4 mx-auto m-4 p-5 " style="background-color: rgba(255, 255, 255, 0.99); border-radius: 15px 15px 15px 15px;">
+
+                <img src="{% static 'core/svg/arandanos.svg' %}" class="mx-auto d-block" width="100" height="100" class="d-inline-block align-top" alt="">
+
+                <br>
+                <center>
+                <h1><strong>Ingreso</strong></h1>
+                </center>
+                <form action="" method="POST">
+
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <label class=" label label-danger">
+                            ❗ suario o contraseña incorrecta.
+                        </label>
+                    {%else%}
+                        <br>
+                    {% endif %}
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" name="username" aria-describedby="UsernameHelp" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" placeholder="Usuario">
+                        <small id="UsernameHelp" class="form-text text-muted">Ingrese su nombre de usuario</small>
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="password" class="form-control" name="password" aria-describedby="PasswordHelp" autocomplete="current-password" required id="id_password" placeholder="Contraseña">
+                        <small id="PasswordHelp" class="form-text text-muted">Ingrese su contraseña </small>
+                    </div>
+                    <div class="row">
+
+                        <input type="submit"class="btn btn-success col-md-5 m-1" value="Login">
+
+                        <a href="#" class="btn btn-danger col-md-5 m-1">Cancelar</a>
+
+                    </div>
+                    <br><br>
+                    <a href="#">Quieres unirte?</a>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

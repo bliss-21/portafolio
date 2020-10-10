@@ -1,0 +1,45 @@
+
+{% extends 'core/base.html' %}
+{% block title %}Administrador Panel{% endblock %}
+{% block content %}
+    <div class="container">
+
+        <div class="col productos mt-3">
+            <h1>Productos Activos</h1>
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Cod</th>
+                    <th scope="col">Fruta</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Calidad</th>
+                    <th scope="col">Envida</th>
+                    <th scope="col">Vence</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in producto %}
+                  <tr>
+                    <th scope="row">{{ p.id_producto }}</th>
+                    <td>{{ p.id_fruta.nombre }}</td>
+                    <td>{{ p.descripcion }}</td>
+                    <td>{{ p.id_calidad.nombre }}</td>
+                    <td>{{ p.fecha_subida }}</td>
+                    <td>{{ p.fecha_vencimiento }}</td>
+                    <td>{{ p.cantidad }} Kilos</td>
+                    <td>
+                      <a class="btn btn-success" href="{% url 'productor_actualizar' p.id_producto %}">Modificar</a>
+                      <a class="btn btn-danger" href="{% url 'producto_eliminar' p.id_producto %}">Eliminar</a>
+                    </td> 
+                  </tr>   
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+        <a class="btn btn-success" href="{% url 'productor_agregar' %}">Agregar Producto</a>
+
+
+    </div>
+{% endblock %}

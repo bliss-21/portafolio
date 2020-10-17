@@ -5,19 +5,99 @@ BEGIN
     open tipo_afiliacion for select * from tipo_afiliacion;
 END;
 
-ID_SOLICITUD        NOT NULL NUMBER(5)  
+--retorna las solicitudes de afiliacion pendiente
+CREATE OR REPLACE PROCEDURE SP_LISTAR_SOLICITUDES_PENDIENTES(SOLICITUD_AFILIACION out SYS_REFCURSOR)
+IS
+BEGIN
+    -- id_estado_solicitud = 1 equivale a estado PENDIENTE
+    open SOLICITUD_AFILIACION 
+    for select * from
+        solicitud_afiliacion S 
+        join tipo_afiliacion t on s.id_tipo_afiliacion = t.id_tipo_afiliacion 
+        where s.id_estado_solicitud = 1;
+END;
 
---NOMBRE_COMPLETO     NOT NULL VARCHAR2(100 CHAR) 
---MAIL                NOT NULL VARCHAR2(50 CHAR) 
---ID_TIPO_AFILIACION  NOT NULL NUMBER(2) 
+--retorna las solicitudes de afiliacion aprobadas
+CREATE OR REPLACE PROCEDURE SP_LISTAR_SOLICITUDES_APROBADAS(SOLICITUD_AFILIACION out SYS_REFCURSOR)
+IS
+BEGIN
+    -- id_estado_solicitud = 2 equivale a estado APROBADA
+    open SOLICITUD_AFILIACION 
+        for select * from
+        solicitud_afiliacion S 
+        join tipo_afiliacion t on s.id_tipo_afiliacion = t.id_tipo_afiliacion 
+        where s.id_estado_solicitud = 2;
+END;
 
---NOMBRE_EMPRESA               VARCHAR2(200 CHAR) 
---TELEFONO_CONTACTO            VARCHAR2(18 CHAR)  
----COMENTARIO                   VARCHAR2(250 CHAR)
+--retorna las solicitudes de afiliacion Rechazadas
+CREATE OR REPLACE PROCEDURE SP_LISTAR_SOLICITUDES_RECHAZADAS(SOLICITUD_AFILIACION out SYS_REFCURSOR)
+IS
+BEGIN
+    -- id_estado_solicitud = 3 equivale a estado RECHAZADA
+    open SOLICITUD_AFILIACION 
+        for select * from
+        solicitud_afiliacion S 
+        join tipo_afiliacion t on s.id_tipo_afiliacion = t.id_tipo_afiliacion 
+        where s.id_estado_solicitud = 3;
+END;
 
---FECHA_SOLICITUD     NOT NULL DATE               
---ID_ESTADO_SOLICITUD NOT NULL NUMBER(2)          
---USER_ID                      NUMBER(11)   SOL_AFI_EST_SOL_AFI_FK
+--buscar una solicitud pro su ID
+CREATE OR REPLACE PROCEDURE SP_BUSCAR_SOLICITUD(SOLICITUD_AFILIACION out SYS_REFCURSOR, P_ID IN solicitud_afiliacion.ID_SOLICITUD%TYPE)
+IS
+BEGIN
+    open SOLICITUD_AFILIACION 
+        for select * from
+        solicitud_afiliacion S 
+        join tipo_afiliacion t on s.id_tipo_afiliacion = t.id_tipo_afiliacion 
+        where s.id_solicitud = P_ID
+        AND rownum < 1;
+END;
+
+--buscar una solicitud pro su ID
+CREATE OR REPLACE PROCEDURE SP_BUSCAR_SOLICITUD(SOLICITUD_AFILIACION out SYS_REFCURSOR, P_ID IN solicitud_afiliacion.ID_SOLICITUD%TYPE)
+IS
+BEGIN
+    open SOLICITUD_AFILIACION 
+        for select * from
+        solicitud_afiliacion S 
+        join tipo_afiliacion t on s.id_tipo_afiliacion = t.id_tipo_afiliacion 
+        where s.id_solicitud = P_ID
+        AND rownum < 1;
+END;
+
+--prosedimeinto que update un registro
+CREATE OR REPLACE PROCEDURE SP_APROBAR_SOLICITUD_AFILIACION(
+    P_ID IN solicitud_afiliacion.ID_SOLICITUD%TYPE,
+    P_SALIDA OUT NUMBER)
+IS
+BEGIN
+    
+    UPDATE solicitud_afiliacion SET ID_ESTADO_SOLICITUD=2 WHERE ID_SOLICITUD=P_ID;
+    COMMIT;
+    P_SALIDA := 1;
+
+    EXCEPTION
+    WHEN others then
+        P_SALIDA := 0;
+    
+END;
+
+CREATE OR REPLACE PROCEDURE SP_RECHAZAR_SOLICITUD_AFILIACION(
+    P_ID IN solicitud_afiliacion.ID_SOLICITUD%TYPE,
+    P_SALIDA OUT NUMBER)
+IS
+BEGIN
+    
+    UPDATE solicitud_afiliacion SET ID_ESTADO_SOLICITUD=3 WHERE ID_SOLICITUD=P_ID;
+    COMMIT;
+    P_SALIDA := 1;
+
+    EXCEPTION
+    WHEN others then
+        P_SALIDA := 0;
+    
+END;
+
 
 --insertar formulario afiliacon, con procedimiento recibiendo parametros opcionales
 CREATE OR REPLACE PROCEDURE SP_CREATE_SOLICITUD_AFILIACION(
@@ -36,6 +116,4 @@ BEGIN
     
     COMMIT;
 END;
-
-
     
